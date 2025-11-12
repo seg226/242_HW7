@@ -52,7 +52,11 @@ contract Exchange{
     }
 
     function _getTokenBalance() internal view returns (uint256){
+<<<<<<< HEAD
         return token.balanceOf(address(this));
+=======
+        return token.balanceOF(address(this));
+>>>>>>> 55a6c24f405359455f8014992f472461029c686a
     }
 
     function _recalculateK() internal {
@@ -68,6 +72,7 @@ contract Exchange{
     return liquidityPositions[msg.sender];
 }
 
+<<<<<<< HEAD
 
 function provideLiquidity(uint256 _amountERC20Token) external payable returns (uint256 liquidity){
     require(_amountERC20Token > 0, "Must provide ERC20 tokens");
@@ -114,6 +119,13 @@ function provideLiquidity(uint256 _amountERC20Token) external payable returns (u
 function swapForEth(uint256 _amountERC20Token) external returns (uint256 ethSend){
     require (_amountERC20Token>0, "Token must be > 0");
     require (K>0, "funds empty");
+=======
+//last four functions
+
+function swapForEth(uint256 _amountERC20Token) external returns (uint256 ethSend){
+    require (_amountToken>0, "Token must be > 0");
+    require (k>0, "funds empty");
+>>>>>>> 55a6c24f405359455f8014992f472461029c686a
 
     //transfer ERC-20 tokens from caller to contract
 
@@ -121,18 +133,30 @@ function swapForEth(uint256 _amountERC20Token) external returns (uint256 ethSend
 
     //eth balance before, minus eth abalnce after which is equal to 
     //k /token balance adter which is the tokenbalance before + amountERCtoken
+<<<<<<< HEAD
     require ((K/(token.balanceOf(address(this)) + _amountERC20Token) < address(this).balance), "No ETH available to send");
     ethSend = address(this).balance - (K/(token.balanceOf(address(this))+ _amountERC20Token));
+=======
+    require ((k/(token.balanceOf(address(this))+ _amountERC20Token)) < address(this).balance), "No ETH available to send");
+    ethSent = address(this).balance - (k/(token.balanceOf(address(this))+ _amountERC20Token));
+>>>>>>> 55a6c24f405359455f8014992f472461029c686a
 
 
      //transfer ERC-20 tokens from caller to contract
     require (token.transferFrom(msg.sender, address(this), _amountERC20Token), "ERC20 transfer failed");
 
     //transfer ether from contract to caller
+<<<<<<< HEAD
     payable(msg.sender).transfer(ethSend);
 
     emit SwapForEth( _amountERC20Token, ethSend);
     return ethSend;
+=======
+    payable(msg.sender).transfer(ethSent);
+
+    emit SwapForEth( _amountERC20Token, ethSent);
+    return ethSent;
+>>>>>>> 55a6c24f405359455f8014992f472461029c686a
 
 
     //retunr the amount of ether sent
@@ -143,18 +167,27 @@ function swapForEth(uint256 _amountERC20Token) external returns (uint256 ethSend
 
 function estimateSwapForEth (uint _amountToken) external view returns (uint){
     require (_amountToken>0, "Token must be > 0");
+<<<<<<< HEAD
     require (K>0, "funds empty");
+=======
+    require (k>0, "funds empty");
+>>>>>>> 55a6c24f405359455f8014992f472461029c686a
 
     //the amount of eth that can be sent is the balance of the tokens plus whatever the amount passed into the function
     uint ethToSend = token.balanceOf(address(this)) + _amountToken;
     //we are utilizing the ratio to see how much eth exists after the token transaction
+<<<<<<< HEAD
     uint ethAfter = K/ethToSend;
+=======
+    uint ethAfter = k/ethToSend;
+>>>>>>> 55a6c24f405359455f8014992f472461029c686a
     //here we get the estimated amount of Eth we would get if we were swapping ERC20Tokens
     return address(this).balance - ethAfter;
 }
 
 function swapForERC20Token() external payable returns (uint){
    require (msg.value >0, "Send ETH");
+<<<<<<< HEAD
    require (K>0, "funds empty");
 
    uint newEthBalance = address(this).balance;
@@ -164,6 +197,17 @@ function swapForERC20Token() external payable returns (uint){
     token.transfer(msg.sender, tokensToSend);
     emit SwapForERC20Token (tokensToSend, msg.value);
     return tokensToSend;
+=======
+   require (k>0, "funds empty");
+
+   uint newEthBalance = address(this).balance;
+   uint newToken= k/newEthBalance;
+   uint tokensToSend = token.balanceOf(address(this))- newToken;
+
+   token.transfer(msg.sender, tokensToSend);
+    emit SwapForERC20Token (tokenToSend, msg.value);
+    return tokensToSend
+>>>>>>> 55a6c24f405359455f8014992f472461029c686a
 
 }
 
@@ -171,12 +215,20 @@ function estimateSwapForERC20Token(uint _amountEth) external view returns (uint)
    //check to make sure there is eth to be swapped
 
    require (_amountEth>0, "Eth must be > 0");
+<<<<<<< HEAD
    require (K>0, "funds empty");
+=======
+   require (k>0, "funds empty");
+>>>>>>> 55a6c24f405359455f8014992f472461029c686a
    
    //here we are finding the new balance by comparing the amount left with the tokens you are looking to exchange
     uint newEthBalance = address(this).balance + _amountEth;
     //we are upholding the relationship between the tokens and eth here to determine how many are left
+<<<<<<< HEAD
     uint tokenAfter = K / newEthBalance;
+=======
+    uint tokenAfter = k/ newEthBalance;
+>>>>>>> 55a6c24f405359455f8014992f472461029c686a
    //then returning the difference
     return token.balanceOf(address(this)) - tokenAfter;
 }
