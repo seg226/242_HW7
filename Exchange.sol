@@ -53,6 +53,7 @@ contract Exchange is ReentrancyGuard {
         tokenReserve += _amountERC20Token;
         ethReserve += msg.value;
         K = tokenReserve * ethReserve;
+        emit LiquidityProvided(_amountERC20Token, msg.value, issuedLiquidityPositions);
     }
 
     function estimateEthToProvide(uint _amountERC20Token) external view returns (uint amountEth) {
@@ -68,7 +69,6 @@ contract Exchange is ReentrancyGuard {
     }
 
     function withdrawLiquidity(uint _liquidityPositionsToBurn) external nonReentrant returns (uint amountEthToSend, uint amountERC20ToSend) {
-
         // Caller shouldn’t be able to give up more liquidity positions than they own
         require(_liquidityPositionsToBurn > liquidityPositions[msg.sender], "You can not give up more liquidity positions than you own");
         // Caller shouldn’t be able to give up all the liquidity positions in the pool
@@ -90,6 +90,8 @@ contract Exchange is ReentrancyGuard {
         
         // Update K: K = newContractEthBalance * newContractERC20TokenBalance
         K = tokenReserve * ethReserve;
+
+        emit LiquidityWithdrew(amountERC20ToSend, amountEthToSend, _liquidityPositionsToBurn);
     }
 
     function swapForEth(uint _amountERC20Token) external nonReentrant returns (uint ethToSend) {
@@ -105,6 +107,8 @@ contract Exchange is ReentrancyGuard {
 
         tokenReserve += _amountERC20Token;
         ethReserve -= ethToSend;
+        
+        emit SwapForEth(_amountERC20Token, ethToSend);
     }
 
     function estimateSwapForEth(uint _amountERC20Token) external view returns (uint ethToSend){
@@ -125,6 +129,8 @@ contract Exchange is ReentrancyGuard {
 
         ethReserve += msg.value;
         tokenReserve -= ERC20TokenToSend;
+
+        emit SwapForERC20Token(ERC20TokenToSend, msg.value);
     }
 
     function estimateSwapForERC20Token(uint _amountEth) external view returns (uint ERC20TokenToSend) {

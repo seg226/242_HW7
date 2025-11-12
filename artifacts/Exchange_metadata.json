@@ -352,11 +352,11 @@
 			]
 		},
 		"Exchange.sol": {
-			"keccak256": "0xa1b4a59788176c4b47471e08ccdb994f35243e2e85b8d6b7b5282ee2abdf7a4a",
+			"keccak256": "0x52d2efdaa121f33868ec98997cb34ff25ebd8a297c3bc230fb313b87d673d0f4",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://258fabfaded0b81d9dff9c3a927cde2a9a31b8b43d1478f3032e0aec01fe6c88",
-				"dweb:/ipfs/QmUUcMAcjY3wUkGsQpZgyRHu6tkQojdmV9pHtyvJYdRsdG"
+				"bzz-raw://62afc72d85bc740a4b3ec945ee74cf9ed884f8224a4f56d575fdc783aac30921",
+				"dweb:/ipfs/QmPhVyPp28gdjmT9cuvokMF94xxey5nnmY7cD67EL65kKf"
 			]
 		}
 	},
